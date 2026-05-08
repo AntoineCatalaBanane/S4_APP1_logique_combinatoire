@@ -47,6 +47,7 @@ architecture Behavioral of AppCombi_top_tb is
 COMPONENT verif_show_affhex is
 end COMPONENT;
 
+
 COMPONENT AppCombi_top
    port ( 
      i_btn       : in    std_logic_vector (3 downto 0); 
@@ -96,6 +97,7 @@ begin
 
 
 -- Pattes du FPGA Zybo-Z7
+
 uut: AppCombi_top
    PORT MAP(
    i_btn       =>   btn_sim,
