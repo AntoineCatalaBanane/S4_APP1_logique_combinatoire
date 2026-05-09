@@ -52,7 +52,7 @@ signal term0_5, term0_125, sum: std_logic_vector (3 downto 0);
 begin
 
 term0_5 <= '0' & ADCbin(3) &ADCbin(2) & ADCbin(1);
-term0_125 <= '0' &'0' & '0' & ADCbin(3);
+term0_125 <= '0' &'0'  & ADCbin(3)& ADCbin(2);  -- 0.75
 
    inst_add4bit : Add4bits
         port map (
