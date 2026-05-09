@@ -28,11 +28,11 @@ USE UNISIM.Vcomponents.ALL;
 --> L'entity peut porter le nom que vous voulez mais il est de bonne pratique 
 --> d'utiliser le nom du module � tester avec un suffixe par exemple.
 
-ENTITY Decodeur3_8 IS          --> Remarquez que l'ENTITY est vide et doit le demeurer pour un test bench !!!  
-END Decodeur3_8;
+ENTITY Decodeur3_8_tb IS          --> Remarquez que l'ENTITY est vide et doit le demeurer pour un test bench !!!  
+END Decodeur3_8_tb;
 
 
-ARCHITECTURE behavioral OF Decodeur3_8 IS 
+ARCHITECTURE behavioral OF Decodeur3_8_tb IS 
 
 --> Remplacer ce COMPONENT par celui de votre COMPONENT � tester 
     -- Note: vous pouvez copier la partie PORT ( .. ) de l'entity de votre code VHDL 
@@ -58,7 +58,6 @@ end component Decodeur3_8;
     -- notamment en faisant appara�tre clairement une structure de table de v�rit�
 
    SIGNAL vect_test : STD_LOGIC_VECTOR (2 downto 0);  -- Cr�ation d'un signal interne (3 bits)
-   signal led_sim : std_logic_vector (7 downto 0);
 --> D�clarez la constante PERIOD qui est utilis�e pour la simulation
 
    CONSTANT PERIOD    : time := 10 ns;                  --  *** � ajouter avant le premier BEGIN
