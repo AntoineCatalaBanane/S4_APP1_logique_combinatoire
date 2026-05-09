@@ -28,11 +28,11 @@ USE UNISIM.Vcomponents.ALL;
 --> L'entity peut porter le nom que vous voulez mais il est de bonne pratique 
 --> d'utiliser le nom du module � tester avec un suffixe par exemple.
 
-ENTITY Top_tb IS          --> Remarquez que l'ENTITY est vide et doit le demeurer pour un test bench !!!  
-END Top_tb;
+ENTITY FCT2_3_tb IS          --> Remarquez que l'ENTITY est vide et doit le demeurer pour un test bench !!!  
+END FCT2_3_tb;
 
 
-ARCHITECTURE behavioral OF Top_tb IS 
+ARCHITECTURE behavioral OF FCT2_3_tb IS 
 
 --> Remplacer ce COMPONENT par celui de votre COMPONENT � tester 
     -- Note: vous pouvez copier la partie PORT ( .. ) de l'entity de votre code VHDL 
