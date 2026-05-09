@@ -33,10 +33,14 @@ use IEEE.STD_LOGIC_1164.ALL;
 
 entity Bloc2_3_decodeur is
     Port ( ADCbin : in STD_LOGIC_VECTOR (3 downto 0);
-           Led : out STD_LOGIC_VECTOR (7 downto 0));
+           Led_out : out STD_LOGIC_VECTOR (7 downto 0));
 end Bloc2_3_decodeur;
 
+
+
 architecture Behavioral of Bloc2_3_decodeur is
+
+signal inter1 : std_logic_vector (2 downto 0);
 
 component FCT2_3 is
     Port ( ADCbin : in STD_LOGIC_VECTOR (3 downto 0);
@@ -48,7 +52,6 @@ component Decodeur3_8 is
            Led : out STD_LOGIC_VECTOR (7 downto 0));
 end component Decodeur3_8;
 
-signal inter1 : std_logic_vector (2 downto 0);
 
 begin
 
@@ -61,7 +64,7 @@ port map (
 inst_Decodeur3_8 : Decodeur3_8
 port map (
   A2_3 => inter1,
-  Led => Led
+  Led => Led_out
 );
 
 

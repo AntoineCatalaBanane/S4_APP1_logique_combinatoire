@@ -28,11 +28,11 @@ USE UNISIM.Vcomponents.ALL;
 --> L'entity peut porter le nom que vous voulez mais il est de bonne pratique 
 --> d'utiliser le nom du module � tester avec un suffixe par exemple.
 
-ENTITY Bloc2_3_decodeur IS          --> Remarquez que l'ENTITY est vide et doit le demeurer pour un test bench !!!  
-END Bloc2_3_decodeur;
+ENTITY Bloc2_3_decodeur_tb IS          --> Remarquez que l'ENTITY est vide et doit le demeurer pour un test bench !!!  
+END Bloc2_3_decodeur_tb;
 
 
-ARCHITECTURE behavioral OF Bloc2_3_decodeur IS 
+ARCHITECTURE behavioral OF Bloc2_3_decodeur_tb IS 
 
 --> Remplacer ce COMPONENT par celui de votre COMPONENT � tester 
     -- Note: vous pouvez copier la partie PORT ( .. ) de l'entity de votre code VHDL 
@@ -42,7 +42,7 @@ ARCHITECTURE behavioral OF Bloc2_3_decodeur IS
 
 component Bloc2_3_decodeur is
     Port ( ADCbin : in STD_LOGIC_VECTOR (3 downto 0);
-           Led : out STD_LOGIC_VECTOR (7 downto 0));
+           Led_out : out STD_LOGIC_VECTOR (7 downto 0));
 end component Bloc2_3_decodeur;
    
 --> G�n�rez des signaux internes au test bench avec des noms associ�s et les m�me types que dans le port
@@ -75,7 +75,7 @@ BEGIN
   
   UUT: Bloc2_3_decodeur PORT MAP(
       ADCbin => ADCbin_sim, 
-      Led => out_sim
+      Led_out => out_sim
    );
 
  --> on assigne les signaux du vecteur de test vers les signaux connect�s au port map. 
