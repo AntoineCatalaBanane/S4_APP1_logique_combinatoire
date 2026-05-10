@@ -72,7 +72,7 @@ port map (
    Ci => '1' -- peut etre a changer
 );
    
-moins6(3 downto 0) <= ('1' & moins6c2(2 downto 0)) when moins6temp(3) = '1' else	
+Moins6 <= ('1' & moins6c2(2 downto 0)) when moins6temp(3) = '1' else	
           moins6temp;
 
 end Behavioral;

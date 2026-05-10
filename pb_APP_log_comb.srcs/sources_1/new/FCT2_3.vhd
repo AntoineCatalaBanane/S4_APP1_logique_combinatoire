@@ -51,7 +51,7 @@ signal Ci : std_logic;
 
 begin
 
-Ci <= '1' when ADCbin ="0100" else '0';
+
 term0_5 <= '0' & ADCbin(3 downto 1); --0.5
 term0_125 <= "000"  & ADCbin(3);  -- 0.125
 
