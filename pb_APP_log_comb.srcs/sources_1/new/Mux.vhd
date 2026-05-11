@@ -50,25 +50,36 @@ architecture Behavioral of Mux is
 begin
     process (ADCbin, Dizaine, Unites_ns, Code_signe, Unite_s, erreur, BTN, S2)
     begin
-    
-        case BTN is
-          when "00" =>
-            DAFF1 <= Dizaine;
-            DAFF0 <= Unites_ns;
-          when "01" =>
-            DAFF1 <= "0000";
-            DAFF0 <= ADCbin;
-          when "10" =>
-            DAFF1 <= Code_signe;
-            DAFF0 <= Unite_s;
-          when "11" =>
-            DAFF1 <= "0000";
-            DAFF0 <= (others => erreur);
-          when others =>
-            DAFF1 <= "0000";
-            DAFF0 <= "0000";
-
+    case erreur is
+    when '0' =>
+        case S2 is
+        when '0' =>
+            case BTN is
+              when "00" =>
+                DAFF1 <= Dizaine;
+                DAFF0 <= Unites_ns;
+              when "01" =>
+                DAFF1 <= "0000";
+                DAFF0 <= ADCbin;
+              when "10" =>
+                DAFF1 <= Code_signe;
+                DAFF0 <= Unite_s;
+              when "11" =>
+                DAFF1 <= "1110";
+                DAFF0 <= "1101";
+              when others =>
+                DAFF1 <= "0000";
+                DAFF0 <= "0000";
+            end case;
+        when '1' =>                 -- message Er (short pour erreur btw)
+            DAFF1 <= "1110";
+            DAFF0 <= "1101";
         end case;
+    when '1' =>                 -- message Er (short pour erreur btw)
+        DAFF1 <= "1110";
+        DAFF0 <= "1101"; 
+  end case; 
+        
     end process;
 
 end Behavioral;
