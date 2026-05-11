@@ -59,26 +59,22 @@ port map (
 
 Thermo2bin_test : process 
 begin
-   
-for i in 0 to 12 loop
-    vect_test_in <= STD_LOGIC_VECTOR (TO_UNSIGNED(i, 12));
-    WAIT for period;
-end loop;
+
 
 -- cas valides
-for i in 1 to 11 loop
+for i in 0 to 11 loop
     vect_test_in <= (i downto 0 => '1', others => '0');
     WAIT for period;
 end loop;    
 
 -- 1 mobile
-for i in 1 to 11 loop
+for i in 0 to 11 loop
     vect_test_in <= (i => '1', others => '0');
     WAIT for period;
 end loop;  
 
 -- 0 mobile
-for i in 1 to 11 loop
+for i in 0 to 11 loop
     vect_test_in <= (i => '0', others => '1');
     WAIT for period;
 end loop;  
