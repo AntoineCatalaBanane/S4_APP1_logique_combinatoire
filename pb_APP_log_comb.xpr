@@ -4,10 +4,10 @@
 <!-- Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.                   -->
 <!-- Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.   -->
 
-<Project Product="Vivado" Version="7" Minor="67" Path="C:/Users/frat3994/S4_APP1_logique_combinatoire/pb_APP_log_comb.xpr">
+<Project Product="Vivado" Version="7" Minor="67" Path="C:/Users/antoi/Documents/GitHub/S4_APP1_logique_combinatoire/pb_APP_log_comb.xpr">
   <DefaultLaunch Dir="$PRUNDIR"/>
   <Configuration>
-    <Option Name="Id" Val="fbfa33bf844143359da4f5e7109fc83c"/>
+    <Option Name="Id" Val="ca27d01a847244afafa7f02756680702"/>
     <Option Name="Part" Val="xc7z010clg400-1"/>
     <Option Name="CompiledLibDir" Val="$PCACHEDIR/compile_simlib"/>
     <Option Name="CompiledLibDirXSim" Val=""/>
@@ -64,7 +64,7 @@
     <Option Name="DSABoardId" Val="zybo-z7-10"/>
     <Option Name="DSADescription" Val="Vivado generated DSA"/>
     <Option Name="DSAEmuDir" Val="emu"/>
-    <Option Name="WTXSimLaunchSim" Val="228"/>
+    <Option Name="WTXSimLaunchSim" Val="229"/>
     <Option Name="WTModelSimLaunchSim" Val="0"/>
     <Option Name="WTQuestaLaunchSim" Val="0"/>
     <Option Name="WTIesLaunchSim" Val="0"/>
@@ -97,7 +97,7 @@
       <Filter Type="Srcs"/>
       <File Path="$PSRCDIR/sources_1/imports/src/septSegments_encodeur.vhd">
         <FileInfo SFType="VHDL2008">
-          <Attr Name="ImportPath" Val="$PPRDIR/../src/septSegments_encodeur.vhd"/>
+          <Attr Name="ImportPath" Val="$PPRDIR/../../../antoi/Documents/GitHub/src/septSegments_encodeur.vhd"/>
           <Attr Name="ImportTime" Val="1635539909"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="simulation"/>
@@ -105,7 +105,7 @@
       </File>
       <File Path="$PSRCDIR/sources_1/imports/src/septSegments_refreshPmod.vhd">
         <FileInfo SFType="VHDL2008">
-          <Attr Name="ImportPath" Val="$PPRDIR/../src/septSegments_refreshPmod.vhd"/>
+          <Attr Name="ImportPath" Val="$PPRDIR/../../../antoi/Documents/GitHub/src/septSegments_refreshPmod.vhd"/>
           <Attr Name="ImportTime" Val="1651164618"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="simulation"/>
@@ -113,7 +113,7 @@
       </File>
       <File Path="$PSRCDIR/sources_1/imports/src/septSegments_Top.vhd">
         <FileInfo SFType="VHDL2008">
-          <Attr Name="ImportPath" Val="$PPRDIR/../src/septSegments_Top.vhd"/>
+          <Attr Name="ImportPath" Val="$PPRDIR/../../../antoi/Documents/GitHub/src/septSegments_Top.vhd"/>
           <Attr Name="ImportTime" Val="1651164797"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="simulation"/>
@@ -121,7 +121,7 @@
       </File>
       <File Path="$PSRCDIR/sources_1/imports/src/synchro_module_v2.vhd">
         <FileInfo SFType="VHDL2008">
-          <Attr Name="ImportPath" Val="$PPRDIR/../src/synchro_module_v2.vhd"/>
+          <Attr Name="ImportPath" Val="$PPRDIR/../../../antoi/Documents/GitHub/src/synchro_module_v2.vhd"/>
           <Attr Name="ImportTime" Val="1635539909"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="simulation"/>
@@ -129,7 +129,7 @@
       </File>
       <File Path="$PSRCDIR/sources_1/imports/src/AppCombi_top.vhd">
         <FileInfo SFType="VHDL2008">
-          <Attr Name="ImportPath" Val="$PPRDIR/../src/AppCombi_top.vhd"/>
+          <Attr Name="ImportPath" Val="$PPRDIR/../../../antoi/Documents/GitHub/src/AppCombi_top.vhd"/>
           <Attr Name="ImportTime" Val="1651163486"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="simulation"/>
@@ -196,7 +196,24 @@
         </FileInfo>
       </File>
       <File Path="$PSRCDIR/sources_1/new/Add1bitB.vhd">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
       <File Path="$PSRCDIR/sources_1/new/Mux.vhd">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/sources_1/new/Thermo2Bin.vhd">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/sources_1/new/Thermo2Bin_clean.vhd">
         <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="simulation"/>
@@ -204,18 +221,14 @@
       </File>
       <Config>
         <Option Name="DesignMode" Val="RTL"/>
-<<<<<<< Updated upstream
-        <Option Name="TopModule" Val="Bin2DualBCD"/>
-=======
         <Option Name="TopModule" Val="AppCombi_top"/>
->>>>>>> Stashed changes
       </Config>
     </FileSet>
     <FileSet Name="constrs_1" Type="Constrs" RelSrcDir="$PSRCDIR/constrs_1" RelGenDir="$PGENDIR/constrs_1">
       <Filter Type="Constrs"/>
       <File Path="$PSRCDIR/constrs_1/imports/contraintes/AppCombi_top.xdc">
         <FileInfo>
-          <Attr Name="ImportPath" Val="$PPRDIR/../contraintes/AppCombi_top.xdc"/>
+          <Attr Name="ImportPath" Val="$PPRDIR/../../../antoi/Documents/GitHub/contraintes/AppCombi_top.xdc"/>
           <Attr Name="ImportTime" Val="1641412072"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
@@ -229,7 +242,7 @@
       <Filter Type="Srcs"/>
       <File Path="$PSRCDIR/sim_1/imports/verif/AppCombi_top_tb.vhd">
         <FileInfo SFType="VHDL2008">
-          <Attr Name="ImportPath" Val="$PPRDIR/../verif/AppCombi_top_tb.vhd"/>
+          <Attr Name="ImportPath" Val="$PPRDIR/../../../antoi/Documents/GitHub/verif/AppCombi_top_tb.vhd"/>
           <Attr Name="ImportTime" Val="1640205813"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="simulation"/>
@@ -274,7 +287,6 @@
         </FileInfo>
       </File>
       <File Path="$PSRCDIR/sim_1/new/Moins_6_tb.vhd">
-      <File Path="$PSRCDIR/sim_1/new/Mux_tb.vhd">
         <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="simulation"/>

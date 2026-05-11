@@ -38,8 +38,8 @@ entity AppCombi_top is
           i_ADC_th    : in    std_logic_vector (11 downto 0);-- Fait par deux imbéciles
           i_S1        : in    std_logic  ;  -- Fait par deux imbéciles
           i_S2        : in    std_logic  ;-- Fait par deux imbéciles
-          o_DEL2      : in    std_logic  ;-- Fait par deux imbéciles  
-          o_DEL3      : in    std_logic   -- Fait par deux imbéciles  
+          o_DEL2      : out    std_logic  ;-- Fait par deux imbéciles  
+          o_DEL3      : out    std_logic   -- Fait par deux imbéciles  
     
           
           );
@@ -59,18 +59,16 @@ architecture BEHAVIORAL of AppCombi_top is
    signal d_sum             : std_logic_vector (3 downto 0):= "0000";   -- somme
    signal d_cout            : std_logic := '0';                         -- retenue sortie
    --
-<<<<<<< Updated upstream
-   signal d_AFF0            : std_logic_vector (3 downto 0):= "0000";
-   signal d_AFF1            : std_logic_vector (3 downto 0):= "0000";
+
  
    
-=======
+
    signal d_AFF0            : std_logic_vector (3 downto 0);--:= "0000";
    signal d_AFF1            : std_logic_vector (3 downto 0);--:= "0000";
    --
     
  ----------------- BASE COMPONENTS ----------------------  
->>>>>>> Stashed changes
+
  component synchro_module_v2 is
    generic (const_CLK_syst_MHz: integer := freq_sys_MHz);
       Port ( 
@@ -88,16 +86,8 @@ architecture BEHAVIORAL of AppCombi_top is
              o_AFFSSD     : out  STD_LOGIC_VECTOR (7 downto 0)  
            );
    end component;
-<<<<<<< Updated upstream
-   
-   component Add4bits is
-    Port ( X : in STD_LOGIC_VECTOR (3 downto 0);
-           Y : in STD_LOGIC_VECTOR (3 downto 0);
-           S : out STD_LOGIC_VECTOR (3 downto 0);
-           Co : out STD_LOGIC;
-           Ci : in STD_LOGIC);
-end component Add4bits;
-=======
+
+
 ------------- APP SIGNALS ---------------------------
 signal ADCbin_inter0 : std_logic_vector (3 downto 0);
 signal d_JD : std_logic_vector (11 downto 0); --JSP trop comment faire
@@ -148,7 +138,7 @@ end component Mux;
 
 
 
->>>>>>> Stashed changes
+
 
 begin
   
@@ -157,7 +147,7 @@ begin
          port map (
             clkm         => sysclk,
             o_CLK_5MHz   => clk_5MHz,
-            o_S_1Hz      => d_S_1Hz
+            o_S_1Hz      => o_DEL3--d_S_1Hz
         );  
 
    inst_aff :  septSegments_Top
@@ -169,21 +159,15 @@ begin
            o_AFFSSD_Sim   => open,   -- ne pas modifier le "open". Ligne pour simulations seulement.
            o_AFFSSD       => o_SSD   -- sorties directement adaptees au connecteur PmodSSD
        );
-<<<<<<< Updated upstream
+
                    
-   inst_add4bit : Add4bits
-        port map (
-            X => d_opa,
-            Y => d_opb, 
-            Ci => d_cin, 
-            S => d_sum, 
-            Co => d_cout);
+
             
                               
    d_opa               <=  i_sw;                        -- operande A sur interrupteurs
    d_opb               <=  i_btn;                       -- operande B sur boutons
    d_cin               <=  '0';                     -- la retenue d'entr�e alterne 0 1 a 1 Hz
-=======
+
  ------------------- APP INSTANCIATION ----------------------                  
 inst_thermo2bin : thermo2bin
 port map (
@@ -244,7 +228,6 @@ port map (
    --d_opa               <=  i_sw;                        -- operande A sur interrupteurs
    --d_opb               <=  i_btn;                       -- operande B sur boutons
    --d_cin               <=  '0';                     -- la retenue d'entr�e alterne 0 1 a 1 Hz
->>>>>>> Stashed changes
       
    --d_AFF0              <=  d_sum(3 downto 0);           -- Le resultat de votre additionneur affich� sur PmodSSD(0)
    --d_AFF1              <=  '0' & '0' & '0' & d_Cout;    -- La retenue de sortie affich�e sur PmodSSD(1) (0 ou 1)

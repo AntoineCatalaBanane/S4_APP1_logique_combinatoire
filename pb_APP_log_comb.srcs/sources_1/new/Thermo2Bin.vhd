@@ -39,7 +39,7 @@ end Thermo2Bin;
 
 architecture Behavioral of Thermo2Bin is
 signal temp : std_logic_vector(3 downto 0);
-signal erreur : std_logic;
+
 
 begin
 
