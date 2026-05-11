@@ -39,6 +39,7 @@ end AppCombi_top;
  
 architecture BEHAVIORAL of AppCombi_top is
 
+----------------- BASE SIGNALS --------------------------------
    constant nbreboutons     : integer := 4;    -- Carte Zybo Z7
    constant freq_sys_MHz    : integer := 125;  -- 125 MHz 
    
@@ -54,7 +55,7 @@ architecture BEHAVIORAL of AppCombi_top is
    signal d_AFF0            : std_logic_vector (3 downto 0):= "0000";
    signal d_AFF1            : std_logic_vector (3 downto 0):= "0000";
  
-   
+ ----------------- BASE COMPONENTS ----------------------  
  component synchro_module_v2 is
    generic (const_CLK_syst_MHz: integer := freq_sys_MHz);
       Port ( 
@@ -72,17 +73,57 @@ architecture BEHAVIORAL of AppCombi_top is
              o_AFFSSD     : out  STD_LOGIC_VECTOR (7 downto 0)  
            );
    end component;
-   
-   component Add4bits is
-    Port ( X : in STD_LOGIC_VECTOR (3 downto 0);
-           Y : in STD_LOGIC_VECTOR (3 downto 0);
-           S : out STD_LOGIC_VECTOR (3 downto 0);
-           Co : out STD_LOGIC;
-           Ci : in STD_LOGIC);
-end component Add4bits;
+------------- APP SIGNALS ---------------------------
+signal ADCbin_inter : std_logic_vector (3 downto 0);
+signal error_7seg : std_logic;
+-------------APP COMPONENTS---------------------------
+component Thermo2Bin is
+    Port ( ADCth : in STD_LOGIC_VECTOR (11 downto 0);
+           ADCbin : out STD_LOGIC_VECTOR (3 downto 0);
+           erreur : out STD_LOGIC);
+end component Thermo2Bin;
+
+component Bloc2_3_decodeur is
+    Port ( ADCbin : in STD_LOGIC_VECTOR (3 downto 0);
+           Led_out : out STD_LOGIC_VECTOR (7 downto 0));
+end component Bloc2_3_decodeur;
+
+component parite_calculateur is
+    Port (
+        ADCbin : in STD_LOGIC_VECTOR (3 downto 0);
+        S1 : in std_logic;
+        parite : out STD_LOGIC
+        );
+end component parite_calculateur;
+
+component Bin2DualBCD is
+    Port ( ADCbin : in STD_LOGIC_VECTOR (3 downto 0);
+           Dizaines : out STD_LOGIC_VECTOR (3 downto 0);
+           Unites_ns : out STD_LOGIC_VECTOR (3 downto 0);
+           Code_signe : out STD_LOGIC_VECTOR (3 downto 0);
+           Unites_s : out STD_LOGIC_VECTOR (3 downto 0));
+end component Bin2DualBCD;
+
+component Mux is
+    Port ( ADCbin : in STD_LOGIC_VECTOR (3 downto 0);
+           Dizaine : in STD_LOGIC_VECTOR (3 downto 0);
+           Unites_ns : in STD_LOGIC_VECTOR (3 downto 0);
+           Code_signe : in STD_LOGIC_VECTOR (3 downto 0);
+           Unite_s : in STD_LOGIC_VECTOR (3 downto 0);
+           erreur : in STD_LOGIC;
+           BTN : in STD_LOGIC_VECTOR (1 downto 0);
+           S2 : in STD_LOGIC;
+           DAFF0 : out STD_LOGIC_VECTOR (3 downto 0);
+           DAFF1 : out STD_LOGIC_VECTOR (3 downto 0));
+end component Mux;
+
+
+
+
 
 begin
-  
+
+--------------- base instanciation ---------------------  
     inst_synch : synchro_module_v2
      generic map (const_CLK_syst_MHz => freq_sys_MHz)
          port map (
@@ -100,16 +141,21 @@ begin
            o_AFFSSD_Sim   => open,   -- ne pas modifier le "open". Ligne pour simulations seulement.
            o_AFFSSD       => o_SSD   -- sorties directement adaptees au connecteur PmodSSD
        );
-                   
-   inst_add4bit : Add4bits
-        port map (
-            X => d_opa,
-            Y => d_opb, 
-            Ci => d_cin, 
-            S => d_sum, 
-            Co => d_cout);
-            
-                              
+ ------------------- APP INSTANCIATION ----------------------                  
+inst_thermo2bin : thermo2bin
+port map (
+         ADCth => "000000000000",--trouver signal in
+         ADCbin => ADCbin_inter,
+         erreur => erreur_7seg 
+);
+
+inst_Bloc2_3_decodeur : <component_name>
+port map (
+   <port_name> => <signal_name>,
+   <other ports>...
+);         
+
+----------- MAP ZYBO ----------------------                              
    d_opa               <=  i_sw;                        -- operande A sur interrupteurs
    d_opb               <=  i_btn;                       -- operande B sur boutons
    d_cin               <=  '0';                     -- la retenue d'entr�e alterne 0 1 a 1 Hz

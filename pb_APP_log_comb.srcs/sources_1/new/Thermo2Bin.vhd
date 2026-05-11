@@ -38,9 +38,12 @@ entity Thermo2Bin is
 end Thermo2Bin;
 
 architecture Behavioral of Thermo2Bin is
-signal temp : std_logic_vector(3 downto 0);
-signal erreur : std_logic;
 
+------ signaux ---------------
+signal temp : std_logic_vector(3 downto 0);
+signal is_erreur : std_logic;
+
+------------begin--------------
 begin
 
 temp(0) <= (ADCth(0) and not ADCth(1)) or
@@ -61,7 +64,7 @@ temp(3) <= ADCth(7);
 
 ADCbin <= temp; 
 
-erreur <= (not ADCth(0) and ADCth(1)) or
+is_erreur <= (not ADCth(0) and ADCth(1)) or
          (not ADCth(1) and ADCth(2)) or
          (not ADCth(2) and ADCth(3)) or
          (not ADCth(3) and ADCth(4)) or
@@ -73,13 +76,7 @@ erreur <= (not ADCth(0) and ADCth(1)) or
          (not ADCth(9) and ADCth(10)) or
          (not ADCth(10) and ADCth(11));          
 
-
-
-    process(ADCth)
-    
-    begin   
-        
-   end process;
+erreur <= is_erreur;
 
 
 end Behavioral;
