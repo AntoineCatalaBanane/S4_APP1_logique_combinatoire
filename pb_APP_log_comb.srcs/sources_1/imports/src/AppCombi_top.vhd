@@ -95,11 +95,11 @@ signal d_S1, d_S2, d_del2, d_del3, parite_sig : std_logic; --JSP trop comment fa
 signal error_7seg : std_logic;
 signal Dizaines_inter, Unites_ns_inter, Code_signe_inter, Unites_s_inter : std_logic_vector(3 downto 0); --J'ai ajouté ca comme un cave
 -------------APP COMPONENTS---------------------------
-component Thermo2Bin is
+component Thermo2Bin_clean is
     Port ( ADCth : in STD_LOGIC_VECTOR (11 downto 0);
            ADCbin : out STD_LOGIC_VECTOR (3 downto 0);
            erreur : out STD_LOGIC);
-end component Thermo2Bin;
+end component Thermo2Bin_clean;
 
 component Bloc2_3_decodeur is
     Port ( ADCbin : in STD_LOGIC_VECTOR (3 downto 0);
@@ -147,7 +147,7 @@ begin
          port map (
             clkm         => sysclk,
             o_CLK_5MHz   => clk_5MHz,
-            o_S_1Hz      => o_DEL3--d_S_1Hz
+            o_S_1Hz      => o_led6_r--d_S_1Hz
         );  
 
    inst_aff :  septSegments_Top
@@ -169,7 +169,7 @@ begin
    d_cin               <=  '0';                     -- la retenue d'entr�e alterne 0 1 a 1 Hz
 
  ------------------- APP INSTANCIATION ----------------------                  
-inst_thermo2bin : thermo2bin
+inst_thermo2bin : thermo2bin_clean
 port map (
          ADCth => d_JD,--trouver signal in
          ADCbin => ADCbin_inter0,

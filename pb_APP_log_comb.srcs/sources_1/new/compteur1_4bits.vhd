@@ -1,10 +1,11 @@
+
 ----------------------------------------------------------------------------------
 -- Company: 
 -- Engineer: 
 -- 
--- Create Date: 05/11/2026 02:27:50 PM
+-- Create Date: 05/11/2026 10:33:55 AM
 -- Design Name: 
--- Module Name: compteur1_4bits - Behavioral
+-- Module Name: compteurDe1_4bit - Behavioral
 -- Project Name: 
 -- Target Devices: 
 -- Tool Versions: 
@@ -31,13 +32,21 @@ use IEEE.STD_LOGIC_1164.ALL;
 --library UNISIM;
 --use UNISIM.VComponents.all;
 
-entity compteur1_4bits is
---  Port ( );
-end compteur1_4bits;
+entity compteurDe1_4bit is
+    Port ( Adcth : in STD_LOGIC_VECTOR (3 downto 0);
+           nb1 : out STD_LOGIC_VECTOR (2 downto 0));
+end compteurDe1_4bit;
 
-architecture Behavioral of compteur1_4bits is
+
+architecture Behavioral of compteurDe1_4bit is
+signal temp: std_logic_vector (2 downto 0);
 
 begin
 
+temp(0) <= (Adcth(0) and not Adcth(1)) or (Adcth(2) and not Adcth(3));
+temp(1) <= Adcth(1) and not Adcth(3);
+temp(2) <=  Adcth(3);
+
+nb1 <= temp;
 
 end Behavioral;

@@ -31,13 +31,13 @@ use IEEE.STD_LOGIC_1164.ALL;
 --library UNISIM;
 --use UNISIM.VComponents.all;
 
-entity Thermo2Bin is
+entity Thermo2Bin_clean is
     Port ( ADCth : in STD_LOGIC_VECTOR (11 downto 0);
            ADCbin : out STD_LOGIC_VECTOR (3 downto 0);
            erreur : out STD_LOGIC);
-end Thermo2Bin;
+end Thermo2Bin_clean;
 
-architecture Behavioral of Thermo2Bin is
+architecture Behavioral of Thermo2Bin_clean is
 
 ------ signaux ---------------
 signal temp : std_logic_vector(3 downto 0);
