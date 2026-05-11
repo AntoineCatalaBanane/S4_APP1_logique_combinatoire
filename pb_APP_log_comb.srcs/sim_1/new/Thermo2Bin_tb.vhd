@@ -79,6 +79,8 @@ vect_test_in <= "100000000000";
 wait for period;
 vect_test_in <= "111111111110";
 wait for period;
+vect_test_in <= "111111101111";
+wait for period;
 vect_test_in <= "000000000000";
 WAIT;
 

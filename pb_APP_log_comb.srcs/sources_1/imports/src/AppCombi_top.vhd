@@ -149,7 +149,7 @@ port map (
          erreur => erreur_7seg 
 );
 
-inst_Bloc2_3_decodeur : <component_name>
+inst_Bloc2_3_decodeur : <b>
 port map (
    <port_name> => <signal_name>,
    <other ports>...
