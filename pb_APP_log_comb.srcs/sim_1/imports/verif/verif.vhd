@@ -1,11 +1,11 @@
 ---------------------------------------------------------------------------------------------
 -- labo_adder4b_sol_tb.vhd
 ---------------------------------------------------------------------------------------------
--- Universitï¿½ de Sherbrooke - Dï¿½partement de GEGI
+-- Université de Sherbrooke - Département de GEGI
 -- Version         : 3.0
 -- Nomenclature    : GRAMS
--- Date Rï¿½vision   : 21 Avril 2020
--- Auteur(s)       : Rï¿½jean Fontaine, Daniel Dalle, Marc-Andrï¿½ Tï¿½trault
+-- Date Révision   : 21 Avril 2020
+-- Auteur(s)       : Réjean Fontaine, Daniel Dalle, Marc-André Tétrault
 -- Technologies    : FPGA Zynq (carte ZYBO Z7-10 ZYBO Z7-20)
 --                   peripheriques: carte Thermo12, Pmod8LD PmodSSD
 --
@@ -13,14 +13,14 @@
 ---------------------------------------------------------------------------------------------
 -- Description:
 -- Banc d'essai pour circuit combinatoire Laboratoire logique combinatoire
--- Version avec entrï¿½es toutes combinatoires CIRCUIT COMPLET (TOP)
+-- Version avec entrées toutes combinatoires CIRCUIT COMPLET (TOP)
 -- 
--- Revision v1 12 novembre 2018, 3 dï¿½cembre 2018 D. Dalle 
+-- Revision v1 12 novembre 2018, 3 décembre 2018 D. Dalle 
 -- Revision 30 Avril 2021, M-A Tetrault
 --
 ---------------------------------------------------------------------------------------------
 -- Notes :
--- L'entrï¿½e retenue (i_cin) est gï¿½nï¿½rï¿½e par l'interrupteur S1 de la carte Thermobin
+-- L'entrée retenue (i_cin) est générée par l'interrupteur S1 de la carte Thermobin
 --
 ---------------------------------------------------------------------------------------------
 
@@ -33,7 +33,7 @@ use IEEE.STD_LOGIC_1164.ALL;
 --library UNISIM;
 --use UNISIM.VComponents.all;
 
--- requis pour enoncï¿½s de type mem_valeurs_tests(to_integer( unsigned(table_valeurs_adr(9 downto 6) )));
+-- requis pour enoncés de type mem_valeurs_tests(to_integer( unsigned(table_valeurs_adr(9 downto 6) )));
 USE ieee.numeric_std.ALL;          -- 
 use IEEE.STD_LOGIC_UNSIGNED.ALL;   --
 
@@ -44,9 +44,8 @@ end AppCombi_top_tb;
 
 architecture Behavioral of AppCombi_top_tb is
 
-COMPONENT verif_show_affhex
+COMPONENT verif_show_affhex is
 end COMPONENT;
-
 
 COMPONENT AppCombi_top
    port ( 
@@ -56,13 +55,7 @@ COMPONENT AppCombi_top
      o_SSD       : out   std_logic_vector (7 downto 0); 
      o_led       : out   std_logic_vector (3 downto 0); 
      o_led6_r    : out   std_logic;        
-     o_pmodled   : out   std_logic_vector (7 downto 0); 
-     
-      i_ADC_th    : in    std_logic_vector (11 downto 0);-- Fait par deux imbÃ©ciles
-      i_S1        : in    std_logic  ;  -- Fait par deux imbÃ©ciles
-      i_S2        : in    std_logic  ;-- Fait par deux imbÃ©ciles
-      o_DEL2      : out    std_logic  ;-- Fait par deux imbÃ©ciles  
-      o_DEL3      : out    std_logic   -- Fait par deux imbÃ©ciles  
+     o_pmodled   : out   std_logic_vector (7 downto 0) 
      );    
 end COMPONENT;
 
@@ -73,33 +66,36 @@ end COMPONENT;
    signal SSD_sim       :  STD_LOGIC_VECTOR (7 DOWNTO 0) := "00000000";
    signal sw_sim        :  STD_LOGIC_VECTOR (3 DOWNTO 0) := "0000";
    signal btn_sim       :  STD_LOGIC_VECTOR (3 DOWNTO 0) := "0000";
-
+   signal cin_sim       :  STD_LOGIC := '0';
    signal vecteur_test_sim   :  STD_LOGIC_VECTOR (13 DOWNTO 0) := (others => '0');
    signal resultat_attendu       :  STD_LOGIC_VECTOR (4 DOWNTO 0) := "00000";
 
-signal vect_test_in : std_logic_vector (11 downto 0) := (others => '0');
-signal i_S1_sim     : std_logic := '0';
-signal i_S2_sim     : std_logic := '0';
- signal  o_del2_sim : std_logic;
- signal   o_del3_sim : std_logic;
 
    constant sysclk_Period  : time := 8 ns;
    
-constant period : time := 8ns ;
+
 
 ----------------------------------------------------------------------------
--- declaration d'un tableau pour soumettre un vecteur de test 
+-- declaration d'un tableau pour soumettre un vecteur de test  
 ----------------------------------------------------------------------------  
-
+ type table_valeurs_tests is array (integer range 0 to 63) of std_logic_vector(13 downto 0);
+    constant mem_valeurs_tests : table_valeurs_tests := 
+    ( 
+  --  vecteur de test è modifier selon les besoins
+  --  res      op_a     op_b    cin
+    "00000" & "0000" & "0000" & '0',  --   0 +  0  
+    "00000" & "0000" & "0001" & '0',  --   0 +  1 
+    -- modifez et/ou ajoutez vos valeurs
+  
+    -- conserver la ligne ci-bas.
+    others => "00000" & "0000" & "0000" & '0'  --  0 + 0 
+    );
 ----------------------------------------------------------------------------
 
 begin
-btn_sim <= "0001";   -- all 4 bits driven
-sw_sim  <= "0000";   -- make explicit
-    i_S1_sim <= '1'; 
-    i_S2_sim <= '1'; 
--- Pattes du FPGA Zybo-Z7
 
+
+-- Pattes du FPGA Zybo-Z7
 uut: AppCombi_top
    PORT MAP(
    i_btn       =>   btn_sim,
@@ -108,13 +104,7 @@ uut: AppCombi_top
    o_SSD       =>   SSD_sim,
    o_led       =>   led_sim,
    o_pmodled   =>   pmodled_sim,
-   o_led6_r    =>   led6_r_sim,
-   
-    i_ADC_th   => vect_test_in,
-    i_S1       => i_S1_sim, 
-    i_S2        => i_S2_sim,
-    o_DEL2      =>o_del2_sim,
-    o_DEL3      => o_del3_sim
+   o_led6_r    =>   led6_r_sim
    );
    
    
@@ -135,26 +125,30 @@ uut: AppCombi_top
    
    ----------------------------------------
    -- test bench
-   
+   tb : PROCESS
+       variable delai_sim : time  := 50 ns;
+       variable table_valeurs_adr : integer range 0 to 63;
 
-top_test : process 
-begin
-
-
--- cas valides
-for i in 0 to 11 loop
-    vect_test_in <= (i downto 0 => '1', others => '0');
-    WAIT for period;
-end loop;    
-
-
-
--- 0 mobile
-for i in 0 to 11 loop
-    vect_test_in <= (i => '0', others => '1');
-    WAIT for period;
-end loop;  
-WAIT;
-end process;
+      BEGIN
+         -- Phase 1
+         wait for delai_sim;
+         table_valeurs_adr := 0;
+         -- simuler une sequence de valeurs a l'entree 
+         for index in 0 to   mem_valeurs_tests'length-1 loop
+              vecteur_test_sim <= mem_valeurs_tests(table_valeurs_adr);
+              sw_sim  <= vecteur_test_sim (8 downto 5);
+              btn_sim <= vecteur_test_sim (4 downto 1) ;
+              cin_sim <= vecteur_test_sim (0);
+			  resultat_attendu <= vecteur_test_sim(13 downto 9);
+              wait for delai_sim;
+			  --assert (resultat_attendu /= (probe_adder_result) ) report "Resultat pas celui prévu." severity warning; 
+              table_valeurs_adr := table_valeurs_adr + 1;
+			  if(table_valeurs_adr = 63) then
+				exit;
+			  end if;
+         end loop; 
+           
+         WAIT; -- will wait forever
+      END PROCESS;
 
 END Behavioral;

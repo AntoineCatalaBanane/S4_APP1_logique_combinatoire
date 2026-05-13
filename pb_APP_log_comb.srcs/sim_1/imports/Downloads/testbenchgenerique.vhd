@@ -26,7 +26,7 @@ USE UNISIM.Vcomponents.ALL;
 
 --> L'entity du test bench est vide et elle doit le demeurer
 --> L'entity peut porter le nom que vous voulez mais il est de bonne pratique 
---> d'utiliser le nom du module à tester avec un suffixe par exemple.
+--> d'utiliser le nom du module ï¿½ tester avec un suffixe par exemple.
 
 ENTITY Top_tb IS          --> Remarquez que l'ENTITY est vide et doit le demeurer pour un test bench !!!  
 END Top_tb;
@@ -34,94 +34,103 @@ END Top_tb;
 
 ARCHITECTURE behavioral OF Top_tb IS 
 
---> Remplacer ce COMPONENT par celui de votre COMPONENT à tester 
+--> Remplacer ce COMPONENT par celui de votre COMPONENT ï¿½ tester 
     -- Note: vous pouvez copier la partie PORT ( .. ) de l'entity de votre code VHDL 
-    -- et l'insérer dans la déclaration COMPONENT.
---> Si vous voulez comparer 2 modules VHDL, vous pouvez déclarer 2 COMPONENTS 
+    -- et l'insï¿½rer dans la dï¿½claration COMPONENT.
+--> Si vous voulez comparer 2 modules VHDL, vous pouvez dï¿½clarer 2 COMPONENTS 
     -- distincts avec leurs PORT MAP respectif. 
 
-   COMPONENT Top
-   PORT( sortie : OUT STD_LOGIC; 
-          b : IN STD_LOGIC; 
-          c : IN STD_LOGIC; 
-          a : IN STD_LOGIC);
-   END COMPONENT;
+component AppCombi_top is
+  port ( 
+          i_btn       : in    std_logic_vector (3 downto 0); -- Boutons de la carte Zybo
+          i_sw        : in    std_logic_vector (3 downto 0); -- Interrupteurs de la carte Zybo
+          sysclk      : in    std_logic;                     -- horloge systeme
+          o_SSD       : out   std_logic_vector (7 downto 0); -- vers cnnecteur pmod afficheur 7 segments
+          o_led       : out   std_logic_vector (3 downto 0); -- vers DELs de la carte Zybo
+          o_led6_r    : out   std_logic;                     -- vers DEL rouge de la carte Zybo
+          o_pmodled   : out   std_logic_vector (7 downto 0);  -- vers connecteur pmod 8 DELs
+          
+          i_ADC_th    : in    std_logic_vector (11 downto 0);-- Fait par deux imbÃ©ciles
+          i_S1        : in    std_logic  ;  -- Fait par deux imbÃ©ciles
+          i_S2        : in    std_logic  ;-- Fait par deux imbÃ©ciles
+          o_DEL2      : out    std_logic  ;-- Fait par deux imbÃ©ciles  
+          o_DEL3      : out    std_logic   -- Fait par deux imbÃ©ciles  
+    
+          
+          );
+end component AppCombi_top;
    
---> Générez des signaux internes au test bench avec des noms associés et les même types que dans le port
-    -- Note: les noms peuvent être identiques, dans l'exemple on a ajouté un suffixe pour
-    -- identifier clairement le signal qui appartient au test bench
+   signal   i_btn_sim   :   std_logic_vector (3 downto 0); -- Boutons de la carte Zybo
+   signal   i_sw_sim    :        std_logic_vector (3 downto 0); -- Interrupteurs de la carte Zybo
+   signal   sysclk_sim  :     std_logic;                     -- horloge systeme
+   signal   o_SSD_sim   :     std_logic_vector (7 downto 0); -- vers cnnecteur pmod afficheur 7 segments
+   signal   o_led_sim    :   std_logic_vector (3 downto 0); -- vers DELs de la carte Zybo
+   signal   o_led6_r_sim  :    std_logic;                     -- vers DEL rouge de la carte Zybo
+   signal   o_pmodled_sim  :   std_logic_vector (7 downto 0);  -- vers connecteur pmod 8 DELs
+      
+   signal   i_ADC_th_sim  :  std_logic_vector (11 downto 0);-- Fait par deux imbÃ©ciles
+   signal   i_S1_sim      :   std_logic  ;  -- Fait par deux imbÃ©ciles
+   signal   i_S2_sim       :   std_logic  ;-- Fait par deux imbÃ©ciles
+   signal   o_DEL2_sim      : std_logic  ;-- Fait par deux imbÃ©ciles  
+   signal   o_DEL3_sim  : std_logic;
 
-   SIGNAL sortie_sim    : STD_LOGIC;
-   SIGNAL b_sim         : STD_LOGIC;
-   SIGNAL c_sim         : STD_LOGIC;
-   SIGNAL a_sim         : STD_LOGIC;
 
---> S'il y a plusieurs bits en entrée pour lesquels il faut définir des valeurs de test, 
-    -- par exemple a, b, c dans l'exemple présent, on recommande de créer un vecteur de test,
-    -- ce qui facilitera l'écriture du test et la lisibilité du code,
-    -- notamment en faisant apparaître clairement une structure de table de vérité
+ signal vect_test_in : std_logic_vector (11 downto 0);
+ 
+--> Dï¿½clarez la constante PERIOD qui est utilisï¿½e pour la simulation
 
-   SIGNAL vect_test : STD_LOGIC_VECTOR (2 downto 0);  -- Création d'un signal interne (3 bits)
-   
---> Déclarez la constante PERIOD qui est utilisée pour la simulation
+   CONSTANT PERIOD    : time := 10 ns;                  --  *** ï¿½ ajouter avant le premier BEGIN
 
-   CONSTANT PERIOD    : time := 10 ns;                  --  *** à ajouter avant le premier BEGIN
 
---> Il faut faire un port map entre vos signaux internes et le component à tester
---> NOTE: Si vous voulez comparer 2 modules VHDL, vous devez génréer 2 port maps 
 
 
 BEGIN
-  -- Par le "port-map" suivant, cela revient à connecter le composant aux signaux internes du tests bench
-  -- UUT Unit Under Test: ce nom est habituel mais non imposé.
+  -- Par le "port-map" suivant, cela revient ï¿½ connecter le composant aux signaux internes du tests bench
+  -- UUT Unit Under Test: ce nom est habituel mais non imposï¿½.
   -- Si on simule deux composantes, on pourrait avoir UUT1, UUT2 par exemple
   
-  UUT: Top PORT MAP(
-      sortie => sortie_sim, 
-      b => b_sim, 
-      c => c_sim, 
-      a => a_sim
-   );
+inst_AppCombi_top :  AppCombi_top is
+  port ( 
+          i_btn      
+          i_sw        
+          sysclk     
+          o_SSD      
+          o_led      
+          o_led6_r        
+          o_pmodled    
+          
+          i_ADC_th    
+          i_S1      
+          i_S2      
+          o_DEL2     
+          o_DEL3    
+    
+);
 
- --> on assigne les signaux du vecteur de test vers les signaux connectés au port map. 
-a_sim <= vect_test(2); 
-b_sim <= vect_test(1);
-c_sim <= vect_test(0);
- 
+ --> on assigne les signaux du vecteur de test vers les signaux connectï¿½s au port map. 
 -- *** Test Bench - User Defined Section ***
--- l'intérêt de cette structure de test bench est que l'on recopie la table de vérité.
+-- l'intï¿½rï¿½t de cette structure de test bench est que l'on recopie la table de vï¿½ritï¿½.
 
-   tb : PROCESS
-   BEGIN
-         wait for PERIOD; vect_test <="000";   --> Remarquez que "vect_test" contient exactement la table de vérité.  
-         wait for PERIOD; vect_test <="001";   --> Avec cette façon, on s'assure de ne pas manquer de cas
-         wait for PERIOD; vect_test <="010";
-         wait for PERIOD; vect_test <="011";
-         wait for PERIOD; vect_test <="100";
-         wait for PERIOD; vect_test <="101";
-         wait for PERIOD; vect_test <="110";
-         wait for PERIOD; vect_test <="111";
-         
-       --> Cette partie est un exemple pour simuler le thermométrique
---         wait for PERIOD; Thermometrique <="000000000000"; --> Code normal
---         wait for PERIOD; Thermometrique <="000000000001";
---         wait for PERIOD; Thermometrique <="000000000011";
---         wait for PERIOD; Thermometrique <="000000000111";
---         wait for PERIOD; Thermometrique <="000000001111";
---         wait for PERIOD; Thermometrique <="000000011111";
---         wait for PERIOD; Thermometrique <="000000111111";
---         wait for PERIOD; Thermometrique <="000001111111";
---         wait for PERIOD; Thermometrique <="000011111111";
---         wait for PERIOD; Thermometrique <="000111111111";
---         wait for PERIOD; Thermometrique <="001111111111";
---         wait for PERIOD; Thermometrique <="011111111111";
---         wait for PERIOD; Thermometrique <="111111111111";
---         wait for PERIOD; Thermometrique <="000000000010";  --> Code avec erreur
---         wait for PERIOD; Thermometrique <="000000101111";
---         wait for PERIOD; Thermometrique <="111100001111";
-                  
-         WAIT; -- will wait forever
-   END PROCESS;
+-- cas valides
+for i in 0 to 11 loop
+    vect_test_in <= (i downto 0 => '1', others => '0');
+    WAIT for period;
+end loop;    
+
+-- 1 mobile
+for i in 0 to 11 loop
+    vect_test_in <= (i => '1', others => '0');
+    WAIT for period;
+end loop;  
+
+-- 0 mobile
+for i in 0 to 11 loop
+    vect_test_in <= (i => '0', others => '1');
+    WAIT for period;
+end loop;  
+WAIT;
+end process;
+	
 END;
 
 

@@ -74,8 +74,14 @@ begin
         when '1' =>                 -- message Er (short pour erreur btw)
             DAFF1 <= "1110";
             DAFF0 <= "1101";
+        when others =>
+            DAFF1 <= "1110";
+            DAFF0 <= "1101";
         end case;
     when '1' =>                 -- message Er (short pour erreur btw)
+        DAFF1 <= "1110";
+        DAFF0 <= "1101";
+    when others =>
         DAFF1 <= "1110";
         DAFF0 <= "1101"; 
   end case; 

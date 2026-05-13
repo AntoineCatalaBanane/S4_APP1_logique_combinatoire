@@ -219,8 +219,8 @@ port map (
     d_JD                <= i_ADC_th;
     d_S1                <= i_S1;    
     d_S2                <= i_S2;
-    d_del2               <= o_DEL2;
-    d_del3              <= o_DEL3;    
+
+     o_DEL3             <= d_del3;    
 
          
 
